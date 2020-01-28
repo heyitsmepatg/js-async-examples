@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Promise Chaining Example</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+    <section class="container">
+      <h2>Promise Chaining Example</h2>
+      <div class="row">
+        <img id="railroad" src="../crossing.jpg" atl="railroad-crossing" />
+        <img id="train" src="https://js.cx/clipart/train.gif" alt="train" />
+      </div>
+
+      <br />
+      <div class="row">
+        <button
+          class="waves-effect waves-light btn"
+          onclick="getAnswerToLife()"
+        >
+          Find Answer To Life
+        </button>
+      </div>
+    </section>
+
+    <script>
+      // Promise chaining is fun!
+      const getAnswerToLife = () => {
+        const promise1 = fetch("http://localhost:3000/answer", {
+          method: "GET"
+        });
+        promise1
+          .then(response1 => response1.text())
+          .then(responseText1 => {
+            console.log(responseText1);
+            const promise2 = fetch("http://localhost:3000/save-response", {
+              method: "POST"
+            });
+            return promise2;
+          })
+          // Notice here that the result of promise2 arrives in the same promise chain
+          // as promise 1.
+          .then(response2 => response2.text())
+          .then(responseText2 => {
+            console.log(responseText2);
+            const promise3 = fetch("http://localhost:3000/tell-friends", {
+              method: "POST"
+            });
+            return promise3;
+          })
+          .then(response3 => response3.text())
+          .then(responseText3 => {
+            console.log(responseText3);
+          })
+          .catch(error => {
+            console.log("dang something broke along your promise chain...");
+            console.log(`here be some extra info: ${error}`);
+          });
+      };
+
+      // Animation of the train
+      train.onload = function() {
+        let start = Date.now();
+
+        let timer = setInterval(function() {
+          let timePassed = Date.now() - start;
+
+          // Oscillation using simple harmonic motion
+          train.style.left =
+            100 + 100 * Math.sin((2 * Math.PI * timePassed) / 60 / 120) + "px";
+        }, 1000 / 60);
+      };
+    </script>
+  </body>
+</html>

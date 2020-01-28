@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Promise Example</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+    <section class="container">
+      <h2>Promise Example</h2>
+      <div class="row">
+        <img id="railroad" src="../crossing.jpg" atl="railroad-crossing" />
+        <img id="train" src="https://js.cx/clipart/train.gif" alt="train" />
+      </div>
+
+      <br />
+      <div class="row">
+        <button
+          class="waves-effect waves-light btn"
+          onclick="getAnswerToLife()"
+        >
+          Find Answer To Life
+        </button>
+      </div>
+    </section>
+
+    <script>
+      const getAnswerToLife = () => {
+        const promise = fetch("http://localhost:3000/answer", {
+          method: "GET"
+        });
+        promise
+          .then(response => response.text())
+          .then(responseText => {
+            console.log(responseText);
+          })
+          .catch(function(e) {
+            if (e === "no burrito") {
+              // do something
+            } else if (e === "taylor made a friend") {
+              // get mad at taylor
+            } else {
+              console.log(`Something bad happened...${err}`);
+            }
+          });
+      };
+
+      // Animation of the train
+      train.onload = function() {
+        let start = Date.now();
+
+        let timer = setInterval(function() {
+          let timePassed = Date.now() - start;
+
+          // Oscillation using simple harmonic motion
+          train.style.left =
+            100 + 100 * Math.sin((2 * Math.PI * timePassed) / 60 / 120) + "px";
+        }, 1000 / 60);
+      };
+    </script>
+  </body>
+</html>

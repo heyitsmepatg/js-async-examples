@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nested Callback Example</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+    <section class="container">
+      <h2>Nested Callback Example</h2>
+      <div class="row">
+        <img id="railroad" src="../crossing.jpg" atl="railroad-crossing" />
+        <img id="train" src="https://js.cx/clipart/train.gif" alt="train" />
+      </div>
+
+      <br />
+      <div class="row">
+        <button
+          class="waves-effect waves-light btn"
+          onclick="getAnswerToLife()"
+        >
+          Find Answer To Life
+        </button>
+      </div>
+    </section>
+
+    <script>
+      // Welcome to Callback hell. Enjoy the ride :-)
+      const getAnswerToLife = () => {
+        const request1 = new XMLHttpRequest();
+        const options = {
+          method: "GET",
+          url: "http://localhost:3000/answer",
+          async: true
+        };
+        request1.open(options.method, options.url, options.async);
+        request1.onload = function(e) {
+          console.log(request1.response);
+          const request2 = new XMLHttpRequest();
+          const options = {
+            method: "GET",
+            url: "http://localhost:3000/save-response",
+            async: true
+          };
+          request2.open(options.method, options.url, options.async);
+          request2.onload = function(e) {
+            console.log(request2.response);
+            const request3 = new XMLHttpRequest();
+            const options = {
+              method: "GET",
+              url: "http://localhost:3000/tell-friend",
+              async: true
+            };
+            request3.open(options.method, options.url, options.async);
+            request3.onload = function(e) {
+              console.log(request3.response);
+            };
+            request3.send(null);
+          };
+          request2.send(null);
+        };
+        request1.send(null);
+      };
+
+      // Animation of the train
+      train.onload = function() {
+        let start = Date.now();
+
+        let timer = setInterval(function() {
+          let timePassed = Date.now() - start;
+
+          // Oscillation using simple harmonic motion
+          train.style.left =
+            100 + 100 * Math.sin((2 * Math.PI * timePassed) / 60 / 120) + "px";
+        }, 1000 / 60);
+      };
+    </script>
+  </body>
+</html>

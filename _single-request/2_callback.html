@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ballback Example</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+    <section class="container">
+      <h2>Callback Example</h2>
+      <div class="row">
+        <img id="railroad" src="../crossing.jpg" atl="railroad-crossing" />
+        <img id="train" src="https://js.cx/clipart/train.gif" alt="train" />
+      </div>
+
+      <br />
+      <div class="row">
+        <button
+          class="waves-effect waves-light btn"
+          onclick="getAnswerToLife()"
+        >
+          Find Answer To Life
+        </button>
+      </div>
+    </section>
+
+    <script>
+      const getAnswerToLife = () => {
+        const xhr = new XMLHttpRequest();
+        const options = {
+          method: "GET",
+          url: "http://localhost:3000/answer",
+          async: true
+        };
+        xhr.open(options.method, options.url, options.async);
+        xhr.onload = function(e) {
+          console.log(xhr.response);
+        };
+        xhr.send(null);
+      };
+
+      // Animation of the train
+      train.onload = function() {
+        let start = Date.now();
+
+        let timer = setInterval(function() {
+          let timePassed = Date.now() - start;
+
+          // Oscillation using simple harmonic motion
+          train.style.left =
+            100 + 100 * Math.sin((2 * Math.PI * timePassed) / 60 / 120) + "px";
+        }, 1000 / 60);
+      };
+    </script>
+  </body>
+</html>

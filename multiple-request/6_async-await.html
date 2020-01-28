@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Async/Await Example</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+
+  <body>
+    <section class="container">
+      <h2>Async/Await Example</h2>
+      <div class="row">
+        <img id="railroad" src="../crossing.jpg" atl="railroad-crossing" />
+        <img id="train" src="https://js.cx/clipart/train.gif" alt="train" />
+      </div>
+
+      <br />
+      <div class="row">
+        <button
+          class="waves-effect waves-light btn"
+          onclick="getAnswerToLife()"
+        >
+          Find Answer To Life
+        </button>
+      </div>
+    </section>
+
+    <script>
+      const getAnswerToLife = async () => {
+        const response1 = await fetch("http://localhost:3000/answer", {
+          method: "GET"
+        });
+        const responseText1 = await response1.text();
+        console.log(responseText1);
+
+        const response2 = await fetch("http://localhost:3000/save-response", {
+          method: "GET"
+        });
+        const responseText2 = await response2.text();
+        console.log(responseText2);
+
+        const response3 = await fetch("http://localhost:3000/tell-friends", {
+          method: "GET"
+        });
+        const responseText3 = await response3.text();
+        console.log(responseText3);
+      };
+
+      // Animation of the train
+      train.onload = function() {
+        let start = Date.now();
+
+        let timer = setInterval(function() {
+          let timePassed = Date.now() - start;
+
+          // Oscillation using simple harmonic motion
+          train.style.left =
+            100 + 100 * Math.sin((2 * Math.PI * timePassed) / 60 / 120) + "px";
+        }, 1000 / 60);
+      };
+    </script>
+  </body>
+</html>
